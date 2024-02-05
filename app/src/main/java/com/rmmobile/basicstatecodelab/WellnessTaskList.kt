@@ -10,16 +10,19 @@ import com.rmmobile.WellnessTask
 @Composable
 fun WellnessTasksList(
     onCloseTask: (WellnessTask) -> Unit,
+    onCheckedTask: (WellnessTask, Boolean) -> Unit,
     modifier: Modifier = Modifier,
     list: List<WellnessTask>
 ) {
     LazyColumn(
         modifier = modifier
     ) {
-        items(items = list, key = {task -> task.id}) { task ->
-            WellnessTaskItem(taskName = task.label, onClose = {onCloseTask(task)})
+        items(items = list, key = { task -> task.id }) { task ->
+            WellnessTaskItem(
+                taskName = task.label,
+                checked = task.checked,
+                onCheckedChange = { checked -> onCheckedTask(task, checked) },
+                onClose = { onCloseTask(task) })
         }
     }
 }
-
-//fun getWellnessTasks() = List(30) { i -> WellnessTask(i, "Task # $i") }
